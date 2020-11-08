@@ -1,10 +1,10 @@
 # KinovaGen3_iMOVE
-This repository presents 3 implementations for controlling the robotic arm of Kinovarobotics: Kinova Gen3 Ultralight weight with 7 DoF and a code for its compensation of gravity and Coriolis
+This repository presents 3 implementations for controlling the robotic arm of Kinovarobotics: Kinova Gen3 Ultralight weight with 7 DoF and a code for its compensation of gravity and Coriolis.
 
 This repository encompasses the resulting code of a Master's Thesis (from Master's degree in Robotics and Automatic Control) at UPC (Polytechnic University of Catalonia) in collaboration with IRI (Institut de Robòtica i Informàtica Industrial).
 
 It includes:
-- 3 codes for controlling the robotic arm from Kinovarobotics: Kinova Gen3 Ultralightweight with 7 DOF at Low-Level mode (joint space control at 1 kHz)
+- 3 codes for controlling the robotic arm from Kinovarobotics: Kinova Gen3 Ultralight weight with 7 DOF at Low-Level mode (joint space control at 1 kHz)
 - 1 code that computes Kinova Gen3 gravity and Coriolis compensation
 - 3 codes to test the required drivers or libraries
 
