@@ -1,1 +1,3 @@
-PASTE_HERE_linux_gcc_x86-64 that contains libKortexApi.a
+PASTE_HERE: linux_gcc_x86-64 dowloaded folder that contains the binary form of the library: libKortexApi.a
+
+From: https://artifactory.kinovaapps.com/ui/repos/tree/General/generic-public%2Fkortex%2FAPI%2F2.1.0%2Fkortex_api_2.1.0.zip
