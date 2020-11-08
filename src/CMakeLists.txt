@@ -31,7 +31,7 @@ ADD_EXECUTABLE(xsens_test xsens_test.cpp)
 ADD_EXECUTABLE(pinocchio_test pinocchio_test.cpp)
 
 # XSENS + MYO + PINOCCHIO + KINOVA
-ADD_EXECUTABLE(xsens_myo_admittance_position_control xsens_myo_admittance_position_control.cpp)
+ADD_EXECUTABLE(xsens_myo_admittance_position_control_low_level xsens_myo_admittance_position_control_low_level.cpp)
 ADD_EXECUTABLE(xsens_myo_admittance_torque_control_low_level xsens_myo_admittance_torque_control_low_level.cpp)
 
 
