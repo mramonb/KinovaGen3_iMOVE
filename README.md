@@ -9,6 +9,7 @@ It includes:
 - 3 codes to test the required drivers or libraries
 
 The required drivers or libraries are the following:
+- KINOVA Kortex API (by [Kinovarobotics/kortex](https://github.com/Kinovarobotics/kortex))
 - Xsens MVN Awinda (by the IRI driver mvn_xsens for Linux)
 - Myo Armband (by [brokenpylons/MyoLinux](https://github.com/brokenpylons/MyoLinux)) 
 - Pinocchio: Third-party library to compute Kinova Gen3's dynamics (by [stack-of-tasks/pinocchio](https://github.com/stack-of-tasks/pinocchio))
