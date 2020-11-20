@@ -383,8 +383,8 @@ bool torque_control_low_level(k_api::Base::BaseClient* base, k_api::BaseCyclic::
     double A = 0.08;     //  m
     double f = 0.5;      //  Hz
     double t = 0.0;      //  time
-
-	// -- Desired x,y (position) and vx,vy (velocity)
+    
+    // -- Desired x,y (position) and vx,vy (velocity)
     double x_d, y_d;
     double vx_d, vy_d;
 
@@ -417,11 +417,7 @@ bool torque_control_low_level(k_api::Base::BaseClient* base, k_api::BaseCyclic::
             actuator_config->SetControlMode(control_mode_message, id);
         }
 
-
         std::cout << "Running torque control ^^ for " << TIME_DURATION << " seconds" << std::endl;
-
-        std::ofstream myfile;
-		myfile.open("Cartesian_Position_Control_dX_aX_dR_aR.csv", ios::app);
 
         // Real-time loop
         while (timer_count < (TIME_DURATION * 1000))
@@ -470,36 +466,36 @@ bool torque_control_low_level(k_api::Base::BaseClient* base, k_api::BaseCyclic::
                 J = gen3_GeometricJacobian(q);
                 v = J*dq;
 
-		        // DESIRED: POSE & VELOCITY
+		// DESIRED: POSE & VELOCITY
                 // POSE
                 // --- POSITION
-		        x_d = p_home[0]+0.1 + A*sin(2*M_PI*f*t);
-		        y_d = p_home[1] + A*cos(2*M_PI*f*t);
-		        // Controlling XY to make a circumference and Z to stay in its home position
-		        p_d << x_d, y_d, p_home[2];
+		x_d = p_home[0]+0.1 + A*sin(2*M_PI*f*t);
+		y_d = p_home[1] + A*cos(2*M_PI*f*t);
+		// Controlling XY to make a circumference and Z to stay in its home position
+		p_d << x_d, y_d, p_home[2];
 
-		        // --- ORIENTATION
-		        roll = 0.833*M_PI;
-		        pitch = 0.31*M_PI;
-		        yaw = 0.06*M_PI;
-		        R_d = Eigen::AngleAxisd(roll, Eigen::Vector3d::UnitX())
-		            * Eigen::AngleAxisd(pitch,  Eigen::Vector3d::UnitY())
-		            * Eigen::AngleAxisd(yaw, Eigen::Vector3d::UnitZ());
-		        //std::cout << R_d << std::endl << "is unitary: " << R_d.isUnitary() << std::endl;
+		// --- ORIENTATION
+		roll = 0.833*M_PI;
+		pitch = 0.31*M_PI;
+		yaw = 0.06*M_PI;
+		R_d = Eigen::AngleAxisd(roll, Eigen::Vector3d::UnitX())
+		    * Eigen::AngleAxisd(pitch,  Eigen::Vector3d::UnitY())
+		    * Eigen::AngleAxisd(yaw, Eigen::Vector3d::UnitZ());
+		//std::cout << R_d << std::endl << "is unitary: " << R_d.isUnitary() << std::endl;
 
                 // VELOCITY
-		        vx_d = A*cos(2*M_PI*f*t);
-		        vy_d = -A*sin(2*M_PI*f*t);
+		vx_d = A*cos(2*M_PI*f*t);
+		vy_d = -A*sin(2*M_PI*f*t);
                 v_d << vx_d, vy_d, 0, 0, 0, 0;
 
                 // Updating TIME for SINUS and COSINUS computation
                 t = t + 0.001;
 
                 // TO STOP THE ROBOT 2s BEFORE: setting actuatorS back in position
-		        if(t > TIME_DURATION-2.0)
+		if(t > TIME_DURATION-2.0)
                 {
-                	p_d = p_home;
-                	v_d << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+                    p_d = p_home;
+                    v_d << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
 
                 }
 
@@ -517,30 +513,30 @@ bool torque_control_low_level(k_api::Base::BaseClient* base, k_api::BaseCyclic::
                 // CONTROL SIGNAL OBTAINED
                 control_signal = J.transpose()*(Kp*errorPose + Kd*errorVelocity);
 
-				// ===================================
-		        // ------ Control Signal Limits ------
-		        // ===================================
-		        for (int i = 0; i < ACTUATOR_COUNT; i++)
-                        {
-		            if(control_signal[i]>gen3_JointTorquesLimits[i]){
-		                std::cout << "------------------------ Hi +!" << std::endl;
-		                std::cout << "Control Signal: " << control_signal.transpose() << std::endl;
-			        	control_signal[i] = gen3_JointTorquesLimits[i];
-		            }else if(control_signal[i]<-gen3_JointTorquesLimits[i]){
-         				std::cout << "------------------------ Hi -!" << std::endl;
-         				std::cout << "Control Signal: " << control_signal.transpose() << std::endl;
-			        	control_signal[i] = -gen3_JointTorquesLimits[i];
-		            }
-		        }
+		// ===================================
+		// ------ Control Signal Limits ------
+		// ===================================
+		for (int i = 0; i < ACTUATOR_COUNT; i++)
+		{
+		    if(control_signal[i]>gen3_JointTorquesLimits[i]){
+			std::cout << "------------------------ Hi +!" << std::endl;
+			std::cout << "Control Signal: " << control_signal.transpose() << std::endl;
+				control_signal[i] = gen3_JointTorquesLimits[i];
+		    }else if(control_signal[i]<-gen3_JointTorquesLimits[i]){
+				std::cout << "------------------------ Hi -!" << std::endl;
+				std::cout << "Control Signal: " << control_signal.transpose() << std::endl;
+				control_signal[i] = -gen3_JointTorquesLimits[i];
+		    }
+		}
 
-		        // Controller OUTPUT with KINOVA compensation
-         		tau = control_signal + tau_compensation;
+		// Controller OUTPUT with KINOVA compensation
+		tau = control_signal + tau_compensation;
 
                 //std::cout << "Tau: " << tau.transpose() << std::endl;
 
                 // ===================================
-		        // ------ Joint Torque Commands ------
-		        // ===================================
+		// ------ Joint Torque Commands ------
+		// ===================================
                 for (int i = 0; i < ACTUATOR_COUNT; i++)
                 {
                     // -- Position
