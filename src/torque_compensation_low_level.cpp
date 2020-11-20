@@ -293,9 +293,6 @@ bool torque_control_low_level(k_api::Base::BaseClient* base, k_api::BaseCyclic::
 
         std::cout << "Running torque control ^^ for " << TIME_DURATION << " seconds" << std::endl;
 
-        //std::ofstream myfile;
-	    //myfile.open("Diff_grav_torque_0.txt", ios::app);
-
         // Real-time loop
         while (timer_count < (TIME_DURATION * 1000))
         {
@@ -389,8 +386,6 @@ bool torque_control_low_level(k_api::Base::BaseClient* base, k_api::BaseCyclic::
                 last = GetTickUs();
             }
         }
-
-        //myfile.close();
 
         std::cout << "Torque control ^^ completed" << std::endl;
 
