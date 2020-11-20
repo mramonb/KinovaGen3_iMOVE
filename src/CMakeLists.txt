@@ -31,21 +31,21 @@ ADD_EXECUTABLE(xsens_test xsens_test.cpp)
 ADD_EXECUTABLE(pinocchio_test pinocchio_test.cpp)
 
 # XSENS + MYO + PINOCCHIO + KINOVA
-ADD_EXECUTABLE(xsens_myo_admittance_position_control_low_level xsens_myo_admittance_position_control_low_level.cpp)
-ADD_EXECUTABLE(xsens_myo_admittance_torque_control_low_level xsens_myo_admittance_torque_control_low_level.cpp)
+ADD_EXECUTABLE(joint6_xsens_myo_admittance_position_control_low_level joint6_xsens_myo_admittance_position_control_low_level.cpp)
+ADD_EXECUTABLE(fullarm_xsens_myo_admittance_torque_control_low_level fullarm_xsens_myo_admittance_torque_control_low_level.cpp)
 
 
 # link necessary libraries
 TARGET_LINK_LIBRARIES(xsens_test ${mvn_xsens_LIBRARY})
-TARGET_LINK_LIBRARIES(xsens_myo_admittance_position_control ${mvn_xsens_LIBRARY})
-TARGET_LINK_LIBRARIES(xsens_myo_admittance_torque_control_low_level ${mvn_xsens_LIBRARY})
+TARGET_LINK_LIBRARIES(joint6_xsens_myo_admittance_position_control ${mvn_xsens_LIBRARY})
+TARGET_LINK_LIBRARIES(fullarm_xsens_myo_admittance_torque_control_low_level ${mvn_xsens_LIBRARY})
 
 TARGET_LINK_LIBRARIES(xsens_test ${comm_LIBRARY})
-TARGET_LINK_LIBRARIES(xsens_myo_admittance_position_control ${comm_LIBRARY})
-TARGET_LINK_LIBRARIES(xsens_myo_admittance_torque_control_low_level ${comm_LIBRARY})
+TARGET_LINK_LIBRARIES(joint6_xsens_myo_admittance_position_control ${comm_LIBRARY})
+TARGET_LINK_LIBRARIES(fullarm_xsens_myo_admittance_torque_control_low_level ${comm_LIBRARY})
 
 TARGET_LINK_LIBRARIES(xsens_test ${iriutils_LIBRARY})
-TARGET_LINK_LIBRARIES(xsens_myo_admittance_position_control ${iriutils_LIBRARY})
-TARGET_LINK_LIBRARIES(xsens_myo_admittance_torque_control_low_level ${iriutils_LIBRARY})
+TARGET_LINK_LIBRARIES(joint6_xsens_myo_admittance_position_control ${iriutils_LIBRARY})
+TARGET_LINK_LIBRARIES(fullarm_xsens_myo_admittance_torque_control_low_level ${iriutils_LIBRARY})
 
 
