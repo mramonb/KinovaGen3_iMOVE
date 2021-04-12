@@ -20,6 +20,7 @@ INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 ## KINOVA
 ADD_EXECUTABLE(torque_compensation_low_level torque_compensation_low_level.cpp)
 ADD_EXECUTABLE(torque_control_low_level torque_control_low_level.cpp)
+ADD_EXECUTABLE(admittance_torque_control_low_level admittance_torque_control_low_level.cpp)
 
 ## MYO
 ADD_EXECUTABLE(myo_test myo_test.cpp)
